@@ -46,7 +46,7 @@ class image
 	 * @access private
 	 * @var array
 	 */
-	private $histo;
+	private $hist;
 
 	/**
 	 * Read image from given resource.
@@ -69,14 +69,14 @@ class image
 	 */
 	public function hist()
 	{
-		$this->histo = array_fill(0, 256, 0);
+		$this->hist = array_fill(0, 256, 0);
 		for($x = 0; $x < $this->width; $x++) {
 			for($y = 0; $y < $this->height; $y++) {               
 				$rgb = $this->colorAt($x, $y);
 				$V = round(array_sum($rgb) / 3);
 
 				// add the point to the histogram
-				$this->histo[$V] += $V / ($this->width * $this->height);
+				$this->hist[$V] += $V / ($this->width * $this->height);
 			}
 		}
 		return $this;
@@ -93,7 +93,7 @@ class image
 		echo "<div style='width: " . (255 * $bar) . "px; border: 1px solid #000'>";
 		for ($i=0; $i<255; $i++)
 		{
-			$h = ( $this->histo[$i]/max($this->histo) ) * $height;
+			$h = ( $this->hist[$i]/max($this->hist) ) * $height;
 			echo "<img src='assets/img/img.png' width='" . $bar . "' height='" . $h ."'>";
 		}
 		echo "</div>";
